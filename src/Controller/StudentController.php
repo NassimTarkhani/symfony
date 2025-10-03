@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 final class StudentController extends AbstractController
 {
@@ -40,11 +41,14 @@ final class StudentController extends AbstractController
 return $this->redirectToRoute('app_student');
     }
     #[Route('/documentation',name:'student_docs')]
-public function docs(int $id): Response{
+public function docs(): Response{
 return $this->redirect('https://symfony.com/doc/current/index.html');
-}    #[Route('/documentation',name:'student_docs')]
-public function docs(int $id): Response{
-return $this->redirect('https://symfony.com/doc/current/index.html');
+}
+
+#[Route('/student/redirect/{id}',name:'student_redirect')]
+public function redirectToStudent(int $id): Response{
+    $url = $this->generateUrl('show_student', ['id' => $id]);
+    return $this->redirect($url);
 }
 
 
